@@ -1,3 +1,51 @@
 from django.contrib import admin
+from . import models
 
-# Register your models here.
+
+@admin.register(models.Skill)
+class ItemAdmin(admin.ModelAdmin):
+    
+    """ Item Admin definition"""
+    pass
+
+
+@admin.register(models.Curriculum)
+class CurriculumAdmin(admin.ModelAdmin):
+
+    """ Curriculum Admin definition"""
+
+    fieldsets = (
+        (
+            "Basic Info", 
+            {"fields": ("title", "description", "created_date")},
+        ),
+        (
+            "Other Info",
+            {"fields": ("budget", "period", "education_background", "owner")},
+        )
+    )
+
+    list_display = (
+        "title",
+        "created_date",
+        "period",
+        "budget",
+        "education_background",
+        "owner"
+    )
+
+    ordering = ("title", "budget")
+
+    list_filter = (
+        "period", 
+        "budget",
+        )
+
+    search_fields = ("period", "budget")
+
+    filter_horizontal = (
+        "related_skill",
+    )
+
+    raw_id_fields = ("owner",)
+

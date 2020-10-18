@@ -1,22 +1,15 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# Create your models here.
+
 class User(AbstractUser):
-
-    GENDER_MALE = "Male"
-    GENDER_FEMALE = "Female"
-    GENDER_OTHER = "Other"
-
-    GENDER_CHOICES = (
-        (GENDER_MALE, "Male"),
-        (GENDER_FEMALE, "Female"),
-        (GENDER_OTHER, "Other"),
-    )
 
     """ Custom User Model """
 
-    avatar = models.ImageField(blank=True)
-    gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
-    birthdate = models.DateField(null=True)
-    bio = models.TextField(blank=True)
+    avatar = models.ImageField(blank=True, upload_to="avatars", null=True)
+    my_curriculums = models.ManyToManyField("curriculums.Curriculum", related_name='myC', blank=True)
+    subscribed_curriculum = models.ManyToManyField("curriculums.Curriculum", related_name='subscribedC', blank=True)
+    saved_curriculum_titles = models.ManyToManyField("curriculums.Curriculum", related_name='savedC', blank=True)
+
+    def __str__(self):
+        return self.username

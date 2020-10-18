@@ -30,7 +30,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-PROJECT_APPS = ["users.apps.UsersConfig"]
+THIRDPARTY_APPS = []
+
+PROJECT_APPS = ["core.apps.CoreConfig", "users.apps.UsersConfig", "conversations.apps.ConversationsConfig", "curriculums.apps.CurriculumsConfig"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -124,3 +126,5 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 AUTH_USER_MODEL = "users.User"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")

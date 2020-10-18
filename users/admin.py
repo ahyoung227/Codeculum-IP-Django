@@ -8,6 +8,17 @@ from . import models
 @admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
 
+    pass
     fieldsets = UserAdmin.fieldsets + (
-        ("Banana", {"fields": ("avatar", "gender", "bio")}),
+        ("userAdmin", {"fields": ("avatar", "my_curriculums", "subscribed_curriculum", "saved_curriculum_titles")}),
     )
+    list_filter = UserAdmin.list_filter + ("email",)
+    
+    list_display = (
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "avatar",
+    )
+
