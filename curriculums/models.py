@@ -5,8 +5,8 @@ from users import models as user_models
 
 class AbstractItem(core_models.TimeStampedModel):
 
-    title = models.CharField(max_length=80)    
-    
+    title = models.CharField(max_length=80)
+
     class Meta:
         abstract = True
 
@@ -36,11 +36,18 @@ class Curriculum(core_models.TimeStampedModel):
     title = models.CharField(max_length=140)
     description = models.TextField()
     created_date = models.DateField()
-    period = models.IntegerField() 
+    period = models.IntegerField()
     budget = models.IntegerField()
     related_skill = models.ManyToManyField(Skill, related_name="skill", blank=True)
-    education_background = models.CharField(choices=EDUCATION_CHOICES, max_length=30, null=True)
-    owner = models.ForeignKey(user_models.User, related_name="curriculums", on_delete=models.CASCADE, null=True)
+    education_background = models.CharField(
+        choices=EDUCATION_CHOICES, max_length=30, null=True
+    )
+    owner = models.ForeignKey(
+        user_models.User,
+        related_name="curriculums",
+        on_delete=models.CASCADE,
+        null=True,
+    )
 
     def __str__(self):
         return self.title

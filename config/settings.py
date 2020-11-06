@@ -30,9 +30,14 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-THIRDPARTY_APPS = []
+THIRDPARTY_APPS = ["django-seed"]
 
-PROJECT_APPS = ["core.apps.CoreConfig", "users.apps.UsersConfig", "conversations.apps.ConversationsConfig", "curriculums.apps.CurriculumsConfig"]
+PROJECT_APPS = [
+    "core.apps.CoreConfig",
+    "users.apps.UsersConfig",
+    "conversations.apps.ConversationsConfig",
+    "curriculums.apps.CurriculumsConfig",
+]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -60,7 +65,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

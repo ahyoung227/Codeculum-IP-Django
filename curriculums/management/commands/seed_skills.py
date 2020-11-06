@@ -4,16 +4,16 @@ from curriculums.models import Skill
 
 class Command(BaseCommand):
 
-    help = "This command tells me that he loves me"
+    help = "This command sets skillsets"
 
-    """ def add_arguments(self, parser):
-        parser.add_arguments(
-            "--times", help="How many times do you want me to tell you that I love you"
-        ) """
+    # def add_arguments(self, parser):
+    #     parser.add_argument(
+    #         "--times", help="How many times do you want me to tell you that I love you"
+    #     )
 
-    def handle(self, *args, **options): 
+    def handle(self, *args, **options):
         skills = [
-            "Web Development", 
+            "Web Development",
             "JavaScript",
             "React",
             "Angular",
@@ -30,7 +30,7 @@ class Command(BaseCommand):
             "Typescript",
             "ASP.NET Core",
             "Laravel",
-            "Microservices"
+            "Microservices",
         ]
         for s in skills:
             Skill.objects.create(title=s)

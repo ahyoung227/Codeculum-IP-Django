@@ -4,8 +4,9 @@ from . import models
 
 @admin.register(models.Skill)
 class ItemAdmin(admin.ModelAdmin):
-    
+
     """ Item Admin definition"""
+
     pass
 
 
@@ -16,13 +17,21 @@ class CurriculumAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (
-            "Basic Info", 
+            "Basic Info",
             {"fields": ("title", "description", "created_date")},
         ),
         (
             "Other Info",
-            {"fields": ("budget", "period", "education_background", "owner")},
-        )
+            {
+                "fields": (
+                    "budget",
+                    "period",
+                    "education_background",
+                    "related_skill",
+                    "owner",
+                )
+            },
+        ),
     )
 
     list_display = (
@@ -31,21 +40,18 @@ class CurriculumAdmin(admin.ModelAdmin):
         "period",
         "budget",
         "education_background",
-        "owner"
+        "owner",
     )
 
     ordering = ("title", "budget")
 
     list_filter = (
-        "period", 
+        "period",
         "budget",
-        )
+    )
 
     search_fields = ("period", "budget")
 
-    filter_horizontal = (
-        "related_skill",
-    )
+    filter_horizontal = ("related_skill",)
 
     raw_id_fields = ("owner",)
-
