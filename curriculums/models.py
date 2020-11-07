@@ -1,6 +1,7 @@
 from django.db import models
 from core import models as core_models
 from users import models as user_models
+from django.urls import reverse
 
 
 class AbstractItem(core_models.TimeStampedModel):
@@ -51,6 +52,9 @@ class Curriculum(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("curriculums:detail", kwargs={"pk": self.pk})
 
     # def save(self, *args, **kwargs):
     #     self.city = str.capitalize(self.title)

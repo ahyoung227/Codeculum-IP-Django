@@ -31,7 +31,6 @@ class Command(BaseCommand):
                 "owner": lambda x: random.choice(all_users),
                 "budget": lambda x: random.randint(0, 10000),
                 "period": lambda x: random.randint(0, 100),
-                "date": lambda x: random.randint(0, 100),
             },
         )
         created_lists = seeder.execute()

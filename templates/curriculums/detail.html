@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block page_name %}
+    Home
+{% endblock page_name %}
+
+{% block content %}
+<div>
+    <h1>{{curriculum.title}}</h1>
+    <h3>{{curriculum.description}}</h3>
+</div>
+<div>
+    <h2>By: {{curriculum.owner.username}} 
+    <h3>Skills</h3>
+    {% for s in curriculum.related_skill.all %}
+        <li>{{ s }}</li>
+    {% endfor %}
+</div>
+
+{% endblock content %}
