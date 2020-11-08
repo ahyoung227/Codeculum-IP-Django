@@ -7,9 +7,7 @@ class Command(BaseCommand):
     help = "This command sets skillsets"
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            "--times", help="How many times do you want to create skills"
-        )
+        parser.add_argument("--times", help="How many skills do you want to create")
 
     def handle(self, *args, **options):
         skills = [

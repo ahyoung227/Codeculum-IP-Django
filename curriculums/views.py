@@ -1,10 +1,9 @@
 from django.http import Http404
 from django.views.generic import ListView
-
-# from django.urls import reverse
 from . import models
 from django.shortcuts import render
 
+# from django.urls import reverse
 # from django.http import HttpResponse
 # from math import ceil
 # from django.core.paginator import Paginator, EmptyPage
@@ -27,6 +26,45 @@ def curriculum_detail(request, pk):
         return render(request, "curriculums/detail.html", {"curriculum": curriculum})
     except models.Curriculum.DoesNotExist:
         raise Http404()
+
+
+def search(request):
+
+    # skill = request.GET.get("skill")
+    # skill = str.capitalize(skill)
+    budget = int(request.GET.get("budget", 0))
+    period = int(request.GET.get("period", 0))
+    s_related_skills = request.GET.getlist("related_skills")
+    form = {
+        # "skill": skill,
+        "budget": budget,
+        "period": period,
+        "s_related_skills": s_related_skills,
+    }
+
+    related_skills = models.Skill.objects.all()
+
+    choices = {"related_skills": related_skills}
+
+    filter_args = {}
+
+    if budget != 0:
+        filter_args["budget__lte"] = budget
+
+    if period != 0:
+        filter_args["period__gte"] = period
+
+    if len(s_related_skills) > 0:
+        for s_related_skill in s_related_skills:
+            filter_args["related_skill__pk"] = int(s_related_skill)
+
+    curriculums = models.Curriculum.objects.filter(**filter_args)
+
+    return render(
+        request,
+        "curriculums/search.html",
+        {**form, **choices, "curriculums": curriculums},
+    )
 
 
 # def all_curriculums(request):
