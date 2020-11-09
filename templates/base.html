@@ -13,7 +13,7 @@
         {% include "partials/nav.html" %}
         {% block search-bar %}
             <form method="get" action="{% url "curriculums:search" %}">
-                <input name = "skill" placeholder="Search by skills" value="">
+                <input name ="title" placeholder="Search by title" value="">
             </form>
         {% endblock search-bar%} 
         

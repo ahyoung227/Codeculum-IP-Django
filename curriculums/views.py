@@ -1,7 +1,7 @@
 from django.http import Http404
-from django.views.generic import ListView
-from . import models
+from django.views.generic import ListView, View, DetailView
 from django.shortcuts import render
+from . import models, forms
 
 # from django.urls import reverse
 # from django.http import HttpResponse
@@ -28,43 +28,79 @@ def curriculum_detail(request, pk):
         raise Http404()
 
 
-def search(request):
+class SearchView(View):
+    def get(self, request):
 
-    # skill = request.GET.get("skill")
-    # skill = str.capitalize(skill)
-    budget = int(request.GET.get("budget", 0))
-    period = int(request.GET.get("period", 0))
-    s_related_skills = request.GET.getlist("related_skills")
-    form = {
-        # "skill": skill,
-        "budget": budget,
-        "period": period,
-        "s_related_skills": s_related_skills,
-    }
+        title = request.GET.get("title")
 
-    related_skills = models.Skill.objects.all()
+        if title:
 
-    choices = {"related_skills": related_skills}
+            form = forms.SearchForm(request.GET)
 
-    filter_args = {}
+            if form.is_valid():
 
-    if budget != 0:
-        filter_args["budget__lte"] = budget
+                title = form.cleaned_data.get("title")
+                period = form.cleaned_data.get("period")
+                budget = form.cleaned_data.get("budget")
+                related_skill = form.cleaned_data.get("related_skill")
+                education_background = form.cleaned_data.get("education_background")
 
-    if period != 0:
-        filter_args["period__gte"] = period
+                filter_args = {}
 
-    if len(s_related_skills) > 0:
-        for s_related_skill in s_related_skills:
-            filter_args["related_skill__pk"] = int(s_related_skill)
+                filter_args["title__startswith"] = title
 
-    curriculums = models.Curriculum.objects.filter(**filter_args)
+                if budget is not None:
+                    filter_args["budget__lte"] = budget
 
-    return render(
-        request,
-        "curriculums/search.html",
-        {**form, **choices, "curriculums": curriculums},
-    )
+                if period is not None:
+                    filter_args["period__gte"] = period
+
+                for s in related_skill:
+                    filter_args["related_skill"] = s
+
+                if education_background is not None:
+                    filter_args["education_background"] = education_background
+
+                curriculums = models.Curriculum.objects.filter(**filter_args)
+
+        else:
+            form = forms.SearchForm()
+
+        return render(
+            request,
+            "curriculums/search.html",
+            {"form": form, "curriculums": curriculums},
+        )
+
+    # # skill = request.GET.get("skill")
+    # # skill = str.capitalize(skill)
+    # budget = int(request.GET.get("budget", 0))
+    # period = int(request.GET.get("period", 0))
+    # s_related_skills = request.GET.getlist("related_skills")
+    # form = {
+    #     # "skill": skill,
+    #     "budget": budget,
+    #     "period": period,
+    #     "s_related_skills": s_related_skills,
+    # }
+
+    # related_skills = models.Skill.objects.all()
+
+    # choices = {"related_skills": related_skills}
+
+    # filter_args = {}
+
+    # if budget != 0:
+    #     filter_args["budget__lte"] = budget
+
+    # if period != 0:
+    #     filter_args["period__gte"] = period
+
+    # if len(s_related_skills) > 0:
+    #     for s_related_skill in s_related_skills:
+    #         filter_args["related_skill__pk"] = int(s_related_skill)
+
+    # curriculums = models.Curriculum.objects.filter(**filter_args)
 
 
 # def all_curriculums(request):

@@ -38,7 +38,7 @@ class Curriculum(core_models.TimeStampedModel):
     description = models.TextField()
     created_date = models.DateField()
     period = models.IntegerField()
-    budget = models.IntegerField()
+    budget = models.IntegerField(help_text="What is available budget?")
     related_skill = models.ManyToManyField(Skill, related_name="skill", blank=True)
     education_background = models.CharField(
         choices=EDUCATION_CHOICES, max_length=30, null=True
