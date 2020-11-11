@@ -1,5 +1,6 @@
 from django.http import Http404
-from django.views.generic import ListView, View, DetailView
+from django.core.paginator import Paginator
+from django.views.generic import ListView, View
 from django.shortcuts import render
 from . import models, forms
 
@@ -7,6 +8,10 @@ from . import models, forms
 # from django.http import HttpResponse
 # from math import ceil
 # from django.core.paginator import Paginator, EmptyPage
+
+
+# class LoginView():
+#     """ """
 
 
 class HomeView(ListView):
@@ -61,7 +66,23 @@ class SearchView(View):
                 if education_background is not None:
                     filter_args["education_background"] = education_background
 
-                curriculums = models.Curriculum.objects.filter(**filter_args)
+                qs = models.Curriculum.objects.filter(**filter_args).order_by(
+                    "-created"
+                )
+
+                #  = models.Curriculum.objects.filter(**filter_args).order_by(
+                #     "-created"
+                # )
+            else:
+                paginator = Paginator(qs, 10, orphans=5)
+                page = request.GET.get("page", 1)
+                curriculums = paginator.get_page(page)
+
+                return render(
+                    request,
+                    "curriculums/search.html",
+                    {"form": form, "curriculums": curriculums},
+                )
 
         else:
             form = forms.SearchForm()
@@ -69,7 +90,7 @@ class SearchView(View):
         return render(
             request,
             "curriculums/search.html",
-            {"form": form, "curriculums": curriculums},
+            {"form": form},
         )
 
     # # skill = request.GET.get("skill")

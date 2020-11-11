@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Search
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar%} 
+
+{% block content %}
+        <h2>Search!</h2>
+
+        <form method="get" action="{% url "curriculums:search" %}">
+        <!-- <div>
+                <label for="skill">Skills</label>
+                <input id = "skill" name = "skill" placeholder="Search by skill" value="{{skill}}"/>
+            </div>
+
+            <div>
+                <label for="budget">Budget</label>
+                <input type ="number" id ="budget" name ="budget" placeholder="budget" value="{{budget}}" />
+            </div>
+
+            <div>
+                <label for="period">Period</label>
+                <input type ="number" id ="period" name ="period" placeholder="period" value="{{period}}"/>
+            </div>
+
+            <div>
+                <h3>Skills</h3>
+                <ul>
+                    {% for s in related_skills %}
+                    <li>
+                        <label for="s_{{s.pk}}">{{s}}</label>
+                        <input name="related_skills" id="s_{{s.pk}}" type="checkbox" value={{s.pk}}
+                        {% if s.pk|slugify in s_related_skills %}
+                        checked
+                        {% endif %}>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- <div>
+                <label for="education_background">Education Background</label>
+                <select name="education_background" id="education_background">
+                    <option value="Non STEM field"></option>
+                    <option value="STEM field">STEM field</option>
+                    <option value="computer science">computer science</option>
+                </select>
+            </div> -->
+
+            <!-- <div>
+                <label for="budget">Budget</label>
+                <input type ="number" id ="budget" name ="budget" placeholder="budget" />
+            </div> -->
+            {{form.as_p}}
+            <button>Search</button>
+        </form>
+
+        <h3>Results</h3>
+        {% for curriculum in curriculums %}
+            <h3>{{ curriculum.title }}</h3>
+        {% endfor %}
+
+{% endblock content %}
