@@ -133,3 +133,10 @@ STATIC_URL = "/static/"
 AUTH_USER_MODEL = "users.User"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+
+# email config
+
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = os.environ.get("MALIGUN_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("MALIGUN_PASSWORD")
