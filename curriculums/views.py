@@ -18,7 +18,7 @@ class HomeView(ListView):
     """ Homeview Definition """
 
     model = models.Curriculum
-    paginate_by = 10
+    paginate_by = 12
     ordering = "created"
     paginate_orphans = 5
     page_kwarg = "page"
