@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "x%++lg+q0^pz2q@o07%r_#*1)nbczo1z2s6lyfm6r4p))xp%%#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = "*"
+# ALLOWED_HOSTS = "*"
 
 
 # Application definition
@@ -138,5 +138,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_PORT = "587"
-EMAIL_HOST_USER = os.environ.get("MALIGUN_USERNAME")
-EMAIL_HOST_PASSWORD = os.environ.get("MALIGUN_PASSWORD")
+EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
+EMAIL_FROM = "codeculum@sandbox00b4e8a3f5ce46e9abc2eafc7071c66b.mailgun.org"

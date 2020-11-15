@@ -10,10 +10,20 @@ class CustomUserAdmin(UserAdmin):
 
     pass
     fieldsets = UserAdmin.fieldsets + (
-        ("userAdmin", {"fields": ("avatar", "my_curriculums", "subscribed_curriculum", "saved_curriculum_titles")}),
+        (
+            "userAdmin",
+            {
+                "fields": (
+                    "avatar",
+                    "my_curriculums",
+                    "subscribed_curriculum",
+                    "saved_curriculum_titles",
+                )
+            },
+        ),
     )
     list_filter = UserAdmin.list_filter + ("email",)
-    
+
     list_display = (
         "username",
         "first_name",
@@ -21,4 +31,3 @@ class CustomUserAdmin(UserAdmin):
         "email",
         "avatar",
     )
-
