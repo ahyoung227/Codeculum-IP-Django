@@ -15,3 +15,22 @@ class SearchForm(forms.Form):
         queryset=models.Skill.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
+
+
+class CreateCurriculumForm(forms.ModelForm):
+    class Meta:
+        model = models.Curriculum
+        fields = (
+            "title",
+            "description",
+            "created_date",
+            "period",
+            "budget",
+            "related_skill",
+            "education_background",
+            "owner",
+        )
+
+    def save(self, *args, **kwargs):
+        curriculum = super().save(commit=False)
+        return curriculum

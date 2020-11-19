@@ -1,8 +1,25 @@
     <ul class="flex items-center text-sm font-medium h-full">
         {% if user.is_authenticated %}
+            <li class="nav_link mr-10 text-center">
+                <a href="{% url 'users:switch-managing' %}">
+                    {% if request.session.is_managing %}
+                        <p>Stop<br>manager</p>
+                    {% else %}
+                        Start<br>manager
+                    {% endif %}
+                </a>
+            </li>
+            {% if request.session.is_managing %}
+                <li class="nav_link mr-10 text-center">
+                    <a href="{% url 'curriculums:create' %}">
+                    <p> Create<br>Curriculum</p>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="nav_link mr-4"><a href="{{user.get_absolute_url}}">Profile</a></li>
             <li class="m-6"><a href="{% url "users:logout" %}">Log out</a></li>
         {% else %}
             <li class="nav-link"><a href="{% url "users:login" %}">Log in</a></li>
-            <li class="nav-link"><a href="{% url "users:signup" %}">Sign up</a></li>
+            <li class="nav_link mr-6"><a href="{% url "users:signup" %}">Sign up</a></li>
         {% endif %}
     </ul> 

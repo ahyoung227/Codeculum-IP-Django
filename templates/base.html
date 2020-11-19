@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="{% static "css/styles.css" %}">
     </head>
     <body class="text-gray-800 mt-16"> 
+        {% include "partials/messages.html" %}
         <header class="containers max-w-full flex items-center justify-between px-5 h-16 border-b border-gray-400 fixed bg-white inset-0">
             <div class="flex items-center">
                 <a href="{% url "core:home" %}" class="mr-2"><h1 class="font-mono text-3xl"><i class="fas fa-laptop-code mr-2"></i>Codeculum</h1></a>

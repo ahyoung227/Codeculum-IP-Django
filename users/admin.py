@@ -14,6 +14,7 @@ class CustomUserAdmin(UserAdmin):
             "userAdmin",
             {
                 "fields": (
+                    "bio",
                     "avatar",
                     "my_curriculums",
                     "subscribed_curriculum",

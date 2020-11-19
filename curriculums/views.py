@@ -1,7 +1,9 @@
 from django.http import Http404
 from django.core.paginator import Paginator
-from django.views.generic import ListView, View
-from django.shortcuts import render
+from django.views.generic import ListView, View, UpdateView, FormView
+from django.shortcuts import render, redirect, reverse
+from users import mixins as user_mixins
+from django.contrib import messages
 from . import models, forms
 
 # from django.urls import reverse
@@ -92,6 +94,42 @@ class SearchView(View):
             "curriculums/search.html",
             {"form": form},
         )
+
+
+class EditCurriculumView(user_mixins.LoggedInOnlyView, UpdateView):
+
+    model = models.Curriculum
+    template_name = "curriculums/curriculum_edit.html"
+    fields = {
+        "title",
+        "description",
+        "created_date",
+        "period",
+        "budget",
+        "related_skill",
+        "education_background",
+        "owner",
+    }
+
+    def get_object(self, queryset=None):
+        curriculum = super().get_object(queryset=queryset)
+        if curriculum.owner.pk != self.request.user.pk:
+            raise Http404()
+        return curriculum
+
+
+class CreateCurriculumView(user_mixins.LoggedInOnlyView, FormView):
+
+    form_class = forms.CreateCurriculumForm
+    template_name = "curriculums/curriculum_create.html"
+
+    def form_valid(self, form):
+        curriculum = form.save()
+        curriculum.owner = self.request.user
+        curriculum.save()
+        form.save_m2m()
+        messages.success(self.request, "Room Uploaded")
+        return redirect(reverse("curriculums:detail", kwargs={"pk": curriculum.pk}))
 
     # # skill = request.GET.get("skill")
     # # skill = str.capitalize(skill)
