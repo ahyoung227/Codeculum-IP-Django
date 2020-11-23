@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractUser
 from django.shortcuts import reverse
 from django.db import models
 from django.core.mail import send_mail
-from core import managers as core_managers
 
 
 class User(AbstractUser):
@@ -30,8 +29,6 @@ class User(AbstractUser):
 
     email_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=20, default="", blank=True)
-
-    # objects = core_managers.CustomModelManager()
 
     def get_absolute_url(self):
         return reverse("users:profile", kwargs={"pk": self.pk})

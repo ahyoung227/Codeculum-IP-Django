@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Update Curriculum
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+
+    <div class="container lg:w-1/2 md:w-1/2 xl:w-1/4 mx-auto my-10 flex flex-col items-center border p-6 border-gray-400">
+
+        {% include 'mixins/curriculum/curriculum_form.html' with form=form cta="Update curriculum" %}
+
+    </div>
+{% endblock content %} 

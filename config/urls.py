@@ -25,5 +25,4 @@ urlpatterns = [
     path("users/", include("users.urls", namespace="users")),
     path("curriculums/", include("curriculums.urls", namespace="curriculums")),
     path("admin/", admin.site.urls),
-    path("conversations/", include("conversations.urls", namespace="conversations")),
 ]

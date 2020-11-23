@@ -333,3 +333,5 @@ ASALocalRun/
 
 .env
 node_modules/
+
+uploads/
