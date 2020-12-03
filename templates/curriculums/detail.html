@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 
 {% block page_title %}
-    Detail
+Detail
 {% endblock page_title %}
 
 {% block content %}
+<style>
+    td {
+        padding-right: 15px;
+    }
+</style>
 
-<div class="container mx-auto flex justify-around px-40 py-20 pb-56">
+<div class="container mx-auto flex justify-around px-40 py-20 pb-3">
     <div>
         <div class="flex justify-between">
             <div>
@@ -22,22 +27,78 @@
             <span class="mr-5 font-light">{{curriculum.period}} day{{curriculum.period|pluralize}}</span>
             <span class="mr-5 font-light">$ {{curriculum.budget}}</span>
             <span class="mr-5 font-light">Created: {{curriculum.created_date}}</span>
-            <span class="mr-5 font-light">Background: {{curriculum.education_background}}</span>
-
+            <span class="mr-5 font-light">Background: {{curriculum.education_background}} {{curriculum.day.all}}
+                {{ curriculum.day.task.all }}</span>
+            <div class="mr-2 w-1/6">
+                {% if curriculum.owner == user %}
+                <a href="{% url 'curriculums:edit' curriculum.pk %}" class="btn-link block text-sm">Edit Info</a>
+                {% endif %}
+            </div>
+            <div class="w-1/6">
+                {% if curriculum.owner == user %}
+                <a href="" class="btn-link block text-sm px-3">Edit Schedule</a>
+                {% endif %}
+            </div>
         </div>
-        <div class="border-section">
+
+        <div class="border-section mb-4">
             <h4 class="font-medium text-lg mb-5">Skills</h4>
             {% for a in curriculum.related_skill.all %}
-                <span class="mb-2 mr-5">{{a}}</span>
+            <span class="mb-2 mr-5">{{a}}</span>
             {% endfor %}
         </div>
+
+        <div>
+            <h2 class="font-medium text-lg mb-5">Schedule Detail</h2>
+            <table class="text-center">
+                <!-- <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Contents</th>
+                        <th>Complete</th>
+                    </tr>
+                </thead> -->
+                <tbody class="bg-emerald-200">
+                    {% for a in curriculum.day.all %}
+                    {% for b in a.task.all %}
+                    <tr class="flex-col-reverse">
+                        <td>Day {{a.pk}}</td>
+                        <td>{{b.title}}</td>
+                        <td>{{b.complete}}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                    <!-- <tr>
+                        <td>Day2</td>
+                        <td>Impact on Design Impact on Design Impact on Design Impact on Design</td>
+                        <td>Done</td>
+                    </tr>
+                    <tr>
+                        <td>Day3</td>
+                        <td>Intro to JavaScript Impact on Design Impact on Design</td>
+                        <td>Done</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="w-1/3">
-        {% if curriculum.owner == user %}
-            <a href="{% url 'curriculums:edit' curriculum.pk %}" class="btn-link block">Edit Curriculum</a>
-        {% endif %}    
+    <div>
+        <h2>Subsribed by</h2>
     </div>
 </div>
+
+
+
+<!-- <div class="container mx-auto px-40 mb-10">
+    {% if curriculum.owner == user %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button class="btn-link mt-5 ">Submit</button>
+    </form> 
+    {% endif %}-->
+
+
 
 
 

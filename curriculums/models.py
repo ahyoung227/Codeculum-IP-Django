@@ -43,6 +43,7 @@ class Curriculum(core_models.TimeStampedModel):
     education_background = models.CharField(
         choices=EDUCATION_CHOICES, max_length=30, null=True
     )
+
     owner = models.ForeignKey(
         user_models.User,
         related_name="curriculums",
@@ -59,3 +60,33 @@ class Curriculum(core_models.TimeStampedModel):
     # def save(self, *args, **kwargs):
     #     self.city = str.capitalize(self.title)
     #     super().save(*args, **kwargs)
+
+
+class Day(core_models.TimeStampedModel):
+
+    """ Day model definition """
+
+    curriculum = models.ForeignKey(
+        Curriculum,
+        related_name="day",
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    title = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return f"{self.title} - {self.curriculum}"
+
+
+class Task(core_models.TimeStampedModel):
+
+    """ Task model definition """
+
+    day = models.ForeignKey(
+        Day, related_name="task", on_delete=models.CASCADE, null=True
+    )
+    title = models.CharField(max_length=200)
+    complete = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.title} - {self.day}"

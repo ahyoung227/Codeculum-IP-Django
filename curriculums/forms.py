@@ -34,3 +34,17 @@ class CreateCurriculumForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         curriculum = super().save(commit=False)
         return curriculum
+
+
+# from django import forms
+# from . import models
+
+
+# class CreateScheduleForm(forms.ModelForm):
+#     class Meta:
+#         model = models.Day
+#         fields = ("title",)
+
+#         def save(self):
+#             review = super().save(commit=false)
+#             return review

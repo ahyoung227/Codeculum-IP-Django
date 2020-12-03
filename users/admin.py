@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from . import models
+from django.utils.safestring import mark_safe
 
 # Register your models here.
 
@@ -8,7 +9,6 @@ from . import models
 @admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
 
-    pass
     fieldsets = UserAdmin.fieldsets + (
         (
             "userAdmin",
@@ -30,5 +30,10 @@ class CustomUserAdmin(UserAdmin):
         "first_name",
         "last_name",
         "email",
-        "avatar",
+        "avatar_display",
     )
+
+    def avatar_display(self, user):
+        if user.avatar:
+            return mark_safe(f'<img src="{user.avatar.url}"/>') 
+        return None

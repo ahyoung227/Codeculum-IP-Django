@@ -12,7 +12,7 @@ class User(AbstractUser):
 
     avatar = models.ImageField(
         blank=True,
-        upload_to="avatars",
+        upload_to="avatars/%Y/%m/%d",
         null=True,
     )
     bio = models.CharField(max_length=40, default="", blank=True)
@@ -45,6 +45,8 @@ class User(AbstractUser):
                 [self.email],
                 fail_silently=False,
             )
+        self.save()
+
         return
 
     # def __str__(self):
