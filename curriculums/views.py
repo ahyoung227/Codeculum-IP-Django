@@ -21,6 +21,7 @@ from . import models, forms
 
 
 class HomeView(ListView):
+
     """ Homeview Definition """
 
     model = models.Curriculum
@@ -44,6 +45,9 @@ def curriculum_detail(request, pk):
 
 
 class SearchView(View):
+
+    """ Searchview Definition """
+
     def get(self, request):
 
         title = request.GET.get("title")
@@ -68,7 +72,7 @@ class SearchView(View):
                     filter_args["budget__lte"] = budget
 
                 if period is not None:
-                    filter_args["period__gte"] = period
+                    filter_args["period__lte"] = period
 
                 for s in related_skill:
                     filter_args["related_skill"] = s
@@ -111,7 +115,7 @@ class EditCurriculumView(user_mixins.LoggedInOnlyView, UpdateView):
     fields = {
         "title",
         "description",
-        "created_date",
+        # "created_date",
         "period",
         "budget",
         "related_skill",

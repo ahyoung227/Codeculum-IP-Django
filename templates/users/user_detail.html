@@ -34,16 +34,16 @@ Log In
         {% endif %}
 
     </div>
-    {% if user_obj.curriculums.count > 0 %}
-    <h3 class="mb-12 text-2xl text-center">{{user_obj.first_name}}'s curriculums</h3>
-    <div class="container mx-auto pb-10 ">
-        <div class="flex flex-wrap mx-20 mb-10">
-            {% for curriculum in user_obj.curriculums.all  %}
-            {% include 'mixins/curriculum_part.html' with curriculum=curriculum %}
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
-
 </div>
+
+{% if user_obj.curriculums.count > 0 %}
+<div class="container px-20">
+    <h3 class="mb-12 text-2xl text-center">{{user_obj.first_name}}'s curriculums</h3>
+    <div>
+        {% for curriculum in user_obj.curriculums.all  %}
+        {% include 'mixins/curriculum_part.html' with curriculum=curriculum %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 {% endblock content %}

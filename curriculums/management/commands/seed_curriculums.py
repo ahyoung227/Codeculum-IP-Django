@@ -13,7 +13,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             "--number",
-            default=2,
+            default=1,
             type=int,
             help="How many curriculums do you want to create",
         )
@@ -29,18 +29,33 @@ class Command(BaseCommand):
             {
                 "title": lambda x: seeder.faker.job(),
                 "owner": lambda x: random.choice(all_users),
-                "budget": lambda x: random.randint(0, 10000),
+                "budget": lambda x: random.randint(0, 100),
                 "period": lambda x: random.randint(0, 100),
             },
         )
-        created_lists = seeder.execute()
-        created_clean = flatten(list(created_lists.values()))
+        created_photo = seeder.execute()
+        created_clean = flatten(list(created_photo.values()))
         skills = curriculum_models.Skill.objects.all()
-        for c in created_clean:
-            slist = curriculum_models.Curriculum.objects.get(pk=c)
+        for pk in created_clean:
+            curriculum = curriculum_models.Curriculum.objects.get(pk=pk)
+            curriculum_models.Photo.objects.create(
+                caption=seeder.faker.sentence(),
+                file=f"curriculum_photos/{random.randint(0, 27)}.jpeg",
+                curriculum=curriculum,
+            )
             for s in skills:
-                magic_number = random.randint(0, 15)
+                magic_number = random.randint(0, 14)
                 if magic_number % 2 == 0:
-                    slist.related_skill.add(s)
+                    curriculum.related_skill.add(s)
+
+        # created_lists = seeder.execute()
+        # created_clean = flatten(list(created_lists.values()))
+        # skills = curriculum_models.Skill.objects.all()
+        # for c in created_clean:
+        # slist = curriculum_models.Curriculum.objects.get(pk=c)
+        # for s in skills:
+        #     magic_number = random.randint(0, 15)
+        #     if magic_number % 2 == 0:
+        #         slist.related_skill.add(s)
 
         self.stdout.write(self.style.SUCCESS(f"{number} curriculums are created"))

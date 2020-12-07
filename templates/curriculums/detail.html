@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page_title %}
-Detail
+{{curriculum.title}}
 {% endblock page_title %}
 
 {% block content %}
@@ -20,14 +20,18 @@ Detail
             </div>
             <a class="m-8" href="{{curriculum.owner.get_absolute_url}}" class="flex flex-col items-center">
                 {% include "mixins/user_avatar.html" with user=curriculum.owner %}
-                <span class="mt-2 text-gray-500">{{curriclum.owner.first_name}}</span>
+                <span class="mt-2 text-gray-500">{{curriclum.first_name}}</span>
             </a>
+        </div>
+        <div>
+            <div class="-mt-5 container w-5/6 h-50vh flex mb-5 bg-center"
+                style="background-image:url({{curriculum.first_photo}})"></div>
         </div>
         <div class="flex border-section mt-0">
             <span class="mr-5 font-light">{{curriculum.period}} day{{curriculum.period|pluralize}}</span>
             <span class="mr-5 font-light">$ {{curriculum.budget}}</span>
             <span class="mr-5 font-light">Created: {{curriculum.created_date}}</span>
-            <span class="mr-5 font-light">Background: {{curriculum.education_background}} {{curriculum.day.all}}
+            <span class="mr-5 font-light">Background: {{curriculum.education_background}}
                 {{ curriculum.day.task.all }}</span>
             <div class="mr-2 w-1/6">
                 {% if curriculum.owner == user %}
@@ -58,7 +62,7 @@ Detail
                         <th>Complete</th>
                     </tr>
                 </thead> -->
-                <tbody class="bg-emerald-200">
+                <!-- <tbody class="bg-emerald-200">
                     {% for a in curriculum.day.all %}
                     {% for b in a.task.all %}
                     <tr class="flex-col-reverse">
@@ -67,8 +71,8 @@ Detail
                         <td>{{b.complete}}</td>
                     </tr>
                     {% endfor %}
-                    {% endfor %}
-                    <!-- <tr>
+                    {% endfor %} -->
+                <!-- <tr>
                         <td>Day2</td>
                         <td>Impact on Design Impact on Design Impact on Design Impact on Design</td>
                         <td>Done</td>
@@ -83,7 +87,7 @@ Detail
         </div>
     </div>
     <div>
-        <h2>Subsribed by</h2>
+        <h2>Subscribed by</h2>
     </div>
 </div>
 

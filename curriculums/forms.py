@@ -23,7 +23,7 @@ class CreateCurriculumForm(forms.ModelForm):
         fields = (
             "title",
             "description",
-            "created_date",
+            # "created_date",
             "period",
             "budget",
             "related_skill",
@@ -40,11 +40,11 @@ class CreateCurriculumForm(forms.ModelForm):
 # from . import models
 
 
-# class CreateScheduleForm(forms.ModelForm):
-#     class Meta:
-#         model = models.Day
-#         fields = ("title",)
+class CreateScheduleForm(forms.ModelForm):
+    class Meta:
+        model = models.Day
+        fields = ("title",)
 
-#         def save(self):
-#             review = super().save(commit=false)
-#             return review
+        def save(self):
+            review = super().save(commit=false)
+            return review

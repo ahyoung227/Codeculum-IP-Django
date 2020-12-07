@@ -1,7 +1,5 @@
 from django.db import models
 
-# from . import managers
-
 
 class TimeStampedModel(models.Model):
 

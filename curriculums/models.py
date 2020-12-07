@@ -6,6 +6,8 @@ from django.urls import reverse
 
 class AbstractItem(core_models.TimeStampedModel):
 
+    """ Abstact Item """
+
     title = models.CharField(max_length=80)
 
     class Meta:
@@ -17,12 +19,28 @@ class AbstractItem(core_models.TimeStampedModel):
 
 class Skill(AbstractItem):
 
+    """ Skill Object Definition """
+
     pass
+
+
+class Photo(core_models.TimeStampedModel):
+
+    """ Photo Model Definition """
+
+    file = models.ImageField()
+    caption = models.CharField(max_length=50, blank=True, null=True)
+    curriculum = models.ForeignKey(
+        "Curriculum", on_delete=models.CASCADE, related_name="photos"
+    )
+
+    def __str__(self):
+        return self.caption
 
 
 class Curriculum(core_models.TimeStampedModel):
 
-    """ Curriculum Model definition """
+    """ Curriculum Model Definition """
 
     EDUCATION_COMPUTERSCIENCE = "computer science"
     EDUCATION_STEMFIELD = "STEM field"
@@ -36,7 +54,7 @@ class Curriculum(core_models.TimeStampedModel):
 
     title = models.CharField(max_length=140)
     description = models.TextField()
-    created_date = models.DateField()
+    learning_goal = models.CharField(max_length=140, null=True)
     period = models.IntegerField()
     budget = models.IntegerField(help_text="What is available budget?")
     related_skill = models.ManyToManyField(Skill, related_name="skill", blank=True)
@@ -56,6 +74,10 @@ class Curriculum(core_models.TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse("curriculums:detail", kwargs={"pk": self.pk})
+
+    def first_photo(self):
+        (photo,) = self.photos.all()[:1]
+        return photo.file.url
 
     # def save(self, *args, **kwargs):
     #     self.city = str.capitalize(self.title)
