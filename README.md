@@ -11,9 +11,10 @@
 
 ### Built With
 
+- [DJANGO]
+- [PYTHON]
 - [HTML]
 - [CSS]
-- [JAVASCRIPT]
 
 <!-- LICENSE -->
 
