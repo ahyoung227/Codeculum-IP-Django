@@ -4,7 +4,6 @@
 
 ## About The Project
 
-<p>Login</p>
 <img src="uploads/avatars/profile.gif">
 <p>DetailView</p>
 <img src="uploads/avatars/detailview.gif">
